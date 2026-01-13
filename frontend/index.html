@@ -3,37 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenue - Location Voiture</title>
+    <title>Location de Prestige - Trouvez votre véhicule de rêve</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="index-body">
+<body class="landing-body">
 
-    <div class="index-container">
-        <div class="hero-content">
-            <div class="logo-icon">🚗</div>
-            <h1>Location de Prestige</h1>
-            <p>Réservez le véhicule de vos rêves en quelques clics. Simple, rapide et sécurisé.</p>
+    <!-- Header avec Navigation -->
+    <header class="landing-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-icon">🚗</div>
+                <h1 class="logo-text">Location de Prestige</h1>
+            </div>
+            <nav class="header-nav">
+                <a href="#" class="nav-icon" title="Compte">👤</a>
+                <a href="#" class="nav-icon" title="Favoris">❤️</a>
+                <a href="#" class="nav-icon" title="Panier">🛒</a>
+                <a href="login.html" class="nav-link">Connexion</a>
+                <a href="register.html" class="nav-link btn-nav">Inscription</a>
+            </nav>
         </div>
+    </header>
 
-        <div class="index-actions">
-            <a href="login.html" class="btn-index primary">Se connecter</a>
-            <a href="register.html" class="btn-index secondary">Créer un compte</a>
+    <!-- Section Hero -->
+    <section class="hero-section">
+        <div class="hero-slider">
+            <div class="hero-slide active">
+                <div class="hero-image" style="background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h2 class="hero-title">Amarok V6</h2>
+                    <p class="hero-subtitle">Robuste, sérieux de l'intérieur.</p>
+                    <a href="#featured" class="btn-hero">En savoir plus</a>
+                </div>
+            </div>
         </div>
+        <div class="hero-indicators">
+            <span class="indicator active"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+        </div>
+    </section>
 
-        <div class="index-features">
-            <div class="feature">
-                <span>⚡</span>
-                <p>Rapide</p>
+    <!-- Section Recherche -->
+    <section class="search-section">
+        <div class="search-container">
+            <h2 class="search-title">Recherchez dans notre stock</h2>
+            <p class="search-subtitle">Trouvez la voiture de vos rêves et partez avec aujourd'hui.</p>
+            
+            <div class="search-options">
+                <label class="radio-option">
+                    <input type="radio" name="vehicle-type" value="new" checked>
+                    <span>Nouveau</span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="vehicle-type" value="used">
+                    <span>Occasion</span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="vehicle-type" value="all">
+                    <span>Tout</span>
+                </label>
             </div>
-            <div class="feature">
-                <span>🛡️</span>
-                <p>Sécurisé</p>
+
+            <div class="search-filters">
+                <div class="filter-group">
+                    <label>Marque</label>
+                    <select id="filter-make" class="filter-select">
+                        <option value="">Toutes les marques</option>
+                        <option value="Audi">Audi</option>
+                        <option value="BMW">BMW</option>
+                        <option value="Mercedes">Mercedes</option>
+                        <option value="Volkswagen">Volkswagen</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Modèle</label>
+                    <select id="filter-model" class="filter-select">
+                        <option value="">Sélectionner</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Prix</label>
+                    <div class="price-range">
+                        <input type="number" id="price-from" placeholder="De" class="filter-input">
+                        <input type="number" id="price-to" placeholder="À" class="filter-input">
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Année</label>
+                    <div class="year-range">
+                        <input type="number" id="year-from" placeholder="De" class="filter-input">
+                        <input type="number" id="year-to" placeholder="À" class="filter-input">
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Type de carrosserie</label>
+                    <select id="filter-body" class="filter-select">
+                        <option value="">Sélectionner</option>
+                        <option value="Sedan">Berline</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Hatchback">Citadine</option>
+                        <option value="Coupe">Coupé</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Type de carburant</label>
+                    <select id="filter-fuel" class="filter-select">
+                        <option value="">Sélectionner</option>
+                        <option value="Essence">Essence</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Electrique">Électrique</option>
+                        <option value="Hybride">Hybride</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Transmission</label>
+                    <select id="filter-transmission" class="filter-select">
+                        <option value="">Sélectionner</option>
+                        <option value="Manuelle">Manuelle</option>
+                        <option value="Automatique">Automatique</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Kilométrage</label>
+                    <div class="km-range">
+                        <input type="number" id="km-from" placeholder="De" class="filter-input">
+                        <input type="number" id="km-to" placeholder="À" class="filter-input">
+                    </div>
+                </div>
             </div>
-            <div class="feature">
-                <span>💎</span>
-                <p>Prestige</p>
+            <button class="btn-search" onclick="window.location.href='vehicules.html'">Rechercher maintenant</button>
+        </div>
+    </section>
+
+    <!-- Section Véhicules en Vedette -->
+    <section id="featured" class="featured-section">
+        <div class="featured-container">
+            <h2 class="section-title">Véhicules en vedette</h2>
+            <div class="featured-tabs">
+                <button class="tab-btn active" data-tab="new">Nouveaux véhicules</button>
+                <button class="tab-btn" data-tab="used">Véhicules d'occasion</button>
+                <button class="tab-btn" data-tab="all">Tous les véhicules</button>
+            </div>
+            <div id="featured-vehicles" class="featured-grid">
+                <!-- Les véhicules seront chargés dynamiquement -->
+                <div class="loading-message">Chargement des véhicules...</div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Section Build Your Favorite Vehicle -->
+    <section class="build-section">
+        <div class="build-container">
+            <h2 class="section-title">Construisez votre véhicule préféré</h2>
+            <div class="build-tabs">
+                <button class="build-tab-btn active" data-category="passenger">Passagers</button>
+                <button class="build-tab-btn" data-category="suv">SUV & 4x4</button>
+                <button class="build-tab-btn" data-category="people-mover">Monospace</button>
+                <button class="build-tab-btn" data-category="commercial">Commercial</button>
+            </div>
+            <div class="build-carousel">
+                <button class="carousel-btn prev" onclick="moveCarousel(-1)">‹</button>
+                <div class="carousel-track">
+                    <div class="carousel-slide">
+                        <div class="build-vehicle-card">
+                            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400" alt="Berline">
+                            <h3>Berline Premium</h3>
+                        </div>
+                    </div>
+                    <div class="carousel-slide active">
+                        <div class="build-vehicle-card">
+                            <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=400" alt="Citadine">
+                            <h3>Citadine Élégante</h3>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="build-vehicle-card">
+                            <img src="https://images.unsplash.com/photo-1503376780353-7e669d7ee7761?w=400" alt="Pickup">
+                            <h3>Pickup Robust</h3>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn next" onclick="moveCarousel(1)">›</button>
+            </div>
+            <button class="btn-build" onclick="window.location.href='vehicules.html'">Construire maintenant</button>
+        </div>
+    </section>
+
+    <!-- Section Services -->
+    <section class="services-section">
+        <div class="services-container">
+            <div class="service-card">
+                <div class="service-icon">🚗❤️</div>
+                <h3>Réserver un essai</h3>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💬</div>
+                <h3>Nous contacter</h3>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔧</div>
+                <h3>Service</h3>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💰</div>
+                <h3>Financement</h3>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🚙</div>
+                <h3>Stock actuel</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Welcome -->
+    <section class="welcome-section">
+        <div class="welcome-container">
+            <div class="welcome-content">
+                <h2 class="welcome-title">Bienvenue chez Location de Prestige</h2>
+                <p class="welcome-text">
+                    Nous sommes fiers de vous offrir une sélection exceptionnelle de véhicules de prestige. 
+                    Que vous recherchiez une berline élégante, un SUV spacieux ou un véhicule commercial, 
+                    notre équipe dévouée est là pour vous aider à trouver le véhicule parfait qui correspond 
+                    à vos besoins et à votre style de vie.
+                </p>
+                <p class="welcome-text">
+                    Avec des années d'expérience dans l'industrie automobile, nous nous engageons à fournir 
+                    un service client exceptionnel et des véhicules de la plus haute qualité. Explorez notre 
+                    collection et découvrez pourquoi nous sommes le choix préféré pour la location de véhicules de prestige.
+                </p>
+            </div>
+            <div class="welcome-video">
+                <div class="video-placeholder">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600" alt="Vidéo">
+                    <div class="play-button">▶</div>
+                </div>
+                <h3 class="video-title">LOCATION DE PRESTIGE POUR LA COMMUNAUTÉ</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="landing-footer">
+        <div class="footer-container">
+            <p>&copy; 2024 Location de Prestige. Tous droits réservés.</p>
+            <div class="footer-social">
+                <a href="#" class="social-link">Facebook</a>
+                <a href="#" class="social-link">Twitter</a>
+                <a href="#" class="social-link">Instagram</a>
+                <a href="#" class="social-link">YouTube</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="index.js" defer></script>
 </body>
 </html>
