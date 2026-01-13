@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Réservation - Location Véhicule</title>
+    <style>
+        .container { max-width: 600px; margin: 50px auto; font-family: sans-serif; border: 1px solid #ddd; padding: 20px; border-radius: 8px; }
+        .hidden { display: none; }
+        .error { color: red; background: #fee; padding: 10px; border-radius: 4px; border: 1px solid red; }
+        .timer { font-weight: bold; color: #e74c3c; font-size: 1.2em; }
+        input, button { display: block; width: 100%; margin: 10px 0; padding: 12px; box-sizing: border-box; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button:hover { background: #0056b3; }
+        #price-display { font-size: 1.5em; color: #28a745; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="message-container" class="hidden"></div>
+
+    <div id="section-form" class="hidden">
+        <h2 id="vehicule-title">Chargement du véhicule...</h2>
+        <form id="reservation-form">
+            <label>Date de début</label>
+            <input type="date" id="date_debut" required>
+            
+            <label>Date de fin</label>
+            <input type="date" id="date_fin" required>
+
+            <div style="margin: 20px 0; padding: 10px; background: #f9f9f9;">
+                Nombre de jours : <span id="days-count">0</span><br>
+                Total à payer : <span id="price-display">0</span> MAD
+            </div>
+
+            <button type="submit" id="btn-submit">Vérifier la disponibilité et réserver</button>
+        </form>
+    </div>
+
+    <div id="section-payment" class="hidden">
+        <h2>Paiement requis</h2>
+        <p class="timer">Temps restant : <span id="countdown">30:00</span></p>
+        <p>Montant : <strong id="pay-amount"></strong> €</p>
+        <button id="btn-confirm-payment" style="background: #06ff48;">Payer maintenant</button>
+    </div>
+</div>
+
+<script>
+    const API_URL = "http://localhost:3000";
+    const urlParams = new URLSearchParams(window.location.search);
+    const idVehicule = urlParams.get('id');
+    const token = localStorage.getItem('token');
+
+    let prixParJour = 0; // On va le récupérer du serveur
+
+    async function init() {
+        if (!idVehicule) return showMessage("Erreur : Aucun véhicule sélectionné.", "error");
+
+        try {
+            // 1. Récupérer l'état actuel (si une résa existe déjà)
+            const resStatus = await fetch(`${API_URL}/reservations/${idVehicule}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await resStatus.json();
+
+            // 2. Récupérer les infos du véhicule pour avoir le PRIX (Attention à ta route backend !)
+            // Si tu n'as pas de route spécifique, on utilise les infos du catalogue
+            // Ici, j'utilise une route hypothétique /vehicules/:id
+            const resCar = await fetch(`${API_URL}/vehicules/available`, { // On filtre par ID si possible
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const cars = await resCar.json();
+            const car = cars.find(c => c.id_vehicule == idVehicule);
+
+            if (car) {
+                prixParJour = car.prix_par_jour;
+                document.getElementById('vehicule-title').innerText = `Réserver : ${car.marque} ${car.modele}`;
+            }
+
+            if (data.reservation && data.paymentInfo?.status === "initie") {
+                showPayment(data.paymentInfo.montant, data.tempsRestant, data.reservation.id);
+            } else {
+                document.getElementById('section-form').classList.remove('hidden');
+            }
+        } catch (err) {
+            showMessage("Erreur de communication avec le serveur.", "error");
+        }
+    }
+
+    // --- CALCUL DU PRIX ---
+    function calculerPrix() {
+        const debut = new Date(document.getElementById('date_debut').value);
+        const fin = new Date(document.getElementById('date_fin').value);
+
+        if (debut && fin && fin > debut) {
+            const diffTime = Math.abs(fin - debut);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const total = diffDays * prixParJour;
+            
+            document.getElementById('days-count').innerText = diffDays;
+            document.getElementById('price-display').innerText = total;
+            return total;
+        }
+        return 0;
+    }
+
+    document.getElementById('date_debut').addEventListener('change', calculerPrix);
+    document.getElementById('date_fin').addEventListener('change', calculerPrix);
+
+    // --- ENVOI DE LA RÉSERVATION (Vérifier dispo) ---
+    document.getElementById('reservation-form').onsubmit = async (e) => {
+        e.preventDefault();
+        const montantTotal = calculerPrix();
+
+        if (montantTotal <= 0) return alert("Veuillez choisir des dates valides");
+
+        const payload = {
+            id_vehicule: parseInt(idVehicule),
+            date_debut: document.getElementById('date_debut').value,
+            date_fin: document.getElementById('date_fin').value,
+            montant: montantTotal
+        };
+
+        try {
+            const res = await fetch(`${API_URL}/reservations/`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                window.location.href = `paiement.html?id=${data.reservationId}`;
+              
+            } else {
+                showMessage(data.message || "Véhicule indisponible pour ces dates", "error");
+            }
+        } catch (err) {
+            showMessage("Erreur lors de l'envoi.", "error");
+        }
+    };
+
+    // --- FONCTIONS UTILITAIRES (Paiement, Message) ---
+    function showPayment(montant, msRestant, idResa) {
+        document.getElementById('section-form').classList.add('hidden');
+        document.getElementById('section-payment').classList.remove('hidden');
+        document.getElementById('pay-amount').innerText = montant;
+        
+        let totalSec = Math.floor(msRestant / 1000);
+        const timerInt = setInterval(() => {
+            if (totalSec <= 0) { clearInterval(timerInt); location.reload(); }
+            const mins = Math.floor(totalSec / 60);
+            const secs = totalSec % 60;
+            document.getElementById('countdown').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            totalSec--;
+        }, 1000);
+
+        document.getElementById('btn-confirm-payment').onclick = async () => {
+            const res = await fetch(`${API_URL}/reservations/confirm`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ id_reservation: idResa })
+            });
+            if (res.ok) {
+                alert("Paiement validé !");
+                window.location.href = "vehicules.html";
+            }
+        };
+    }
+
+    function showMessage(text, type) {
+        const msg = document.getElementById('message-container');
+        msg.className = type;
+        msg.innerText = text;
+        msg.classList.remove('hidden');
+    }
+
+    init();
+</script>
+</body>
+</html>

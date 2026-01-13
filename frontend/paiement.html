@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement Sécurisé - MAD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="payment-container">
+    <div class="progress-background">
+        <div id="progress-bar" class="progress-fill"></div>
+    </div>
+
+    <h2>Finalisation du paiement</h2>
+
+    <div class="section timer-wrapper">
+        <p>Temps restant : <span id="timer" class="timer">30:00</span></p>
+    </div>
+
+    <div class="section payment-details">
+        <p class="amount-label">
+            Montant à régler : <span id="montant-a-payer">0</span> <small>MAD</small>
+        </p>
+
+        <form id="payment-form">
+            <input type="text" class="pay-input" id="card-name" placeholder="Nom du titulaire" required>
+            <input type="text" class="pay-input" id="card-number" placeholder="Numéro de carte (16 chiffres)" maxlength="16" required>
+            
+            <div class="row">
+                <input type="text" class="pay-input" id="card-expiry" placeholder="MM/YY" maxlength="5" style="width: 48%;" required>
+                <input type="text" class="pay-input" id="card-cvv" placeholder="CVV" maxlength="3" style="width: 48%;" required>
+            </div>
+
+            <button type="button" id="confirm-payment-btn" class="confirm-btn">
+                Confirmer la réservation
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="paiement.js"></script>
+</body>
+</html>

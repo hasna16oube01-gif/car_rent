@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Merci pour votre commande</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .success-box { text-align: center; padding: 40px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 500px; margin: 50px auto; }
+        .check-icon { font-size: 50px; color: #28a745; margin-bottom: 20px; }
+        .details { text-align: left; background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .btn-home { display: inline-block; padding: 12px 25px; background: #007bff; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="success-box">
+        <div class="check-icon">✔</div>
+        <h1>Merci pour votre commande !</h1>
+        <p>Votre réservation a été enregistrée et est en attente de validation.</p>
+        
+        <div id="order-details" class="details">
+            <p><strong>Numéro de commande :</strong> #<span id="det-id"></span></p>
+            <p><strong>Véhicule :</strong> <span id="det-car"></span></p>
+            <p><strong>Période :</strong> du <span id="det-start"></span> au <span id="det-end"></span></p>
+            <p><strong>Total payé :</strong> <span id="det-price"></span> MAD</p>
+        </div>
+
+        <a href="vehicules.html" class="btn-home">Retour au catalogue</a>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:3000";
+        const token = localStorage.getItem('token');
+        const resId = new URLSearchParams(window.location.search).get('resId');
+
+        async function loadSummary() {
+            // Ici, on peut utiliser une route qui renvoie les détails par ID de réservation
+            const res = await fetch(`${API_URL}/reservations/details/${resId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await res.json();
+
+            document.getElementById('det-id').innerText = data.id_reservation;
+            document.getElementById('det-car').innerText = `${data.marque} ${data.modele}`;
+            document.getElementById('det-start').innerText = new Date(data.date_debut).toLocaleDateString();
+            document.getElementById('det-end').innerText = new Date(data.date_fin).toLocaleDateString();
+            document.getElementById('det-price').innerText = data.montant;
+        }
+        loadSummary();
+    </script>
+</body>
+</html>

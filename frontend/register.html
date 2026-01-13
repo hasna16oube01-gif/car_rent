@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - Location Voiture</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="register-body">
+
+    <div class="register-container">
+        <div class="register-header">
+            <h2>Créer un compte</h2>
+            <p>Rejoignez-nous pour louer votre véhicule en quelques clics</p>
+        </div>
+
+        <form id="registerForm">
+            <div class="input-group">
+                <input type="text" id="reg_nom" placeholder="Nom complet" required>
+            </div>
+
+            <div class="input-group">
+                <input type="email" id="reg_email" placeholder="Adresse Email" required>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="reg_mdp" placeholder="Mot de passe" required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="confirmPassword" placeholder="Confirmer le mot de passe" required>
+            </div>
+
+            <button type="submit" class="btn-register">S'inscrire</button>
+        </form>
+
+        <div class="register-footer">
+            <p>Déjà un compte ? <a href="login.html">Se connecter ici</a></p>
+        </div>
+    </div>
+  <!-- Lien vers JS sinon pas de liaison html js-->
+  <script src="app.js"></script> 
+
+</body>
+</html>
