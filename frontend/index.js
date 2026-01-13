@@ -159,43 +159,25 @@ function displayFeaturedVehicles(vehicules, container, type) {
     });
 }
 
-// --- GESTION DU CARROUSEL BUILD ---
-let currentCarouselIndex = 1;
-const carouselSlides = document.querySelectorAll('.carousel-slide');
-
-function moveCarousel(direction) {
-    currentCarouselIndex += direction;
-    
-    if (currentCarouselIndex < 0) {
-        currentCarouselIndex = carouselSlides.length - 1;
-    } else if (currentCarouselIndex >= carouselSlides.length) {
-        currentCarouselIndex = 0;
-    }
-    
-    carouselSlides.forEach((slide, index) => {
-        slide.classList.toggle('active', index === currentCarouselIndex);
-    });
-}
-
-// Auto-play du carrousel build
-setInterval(() => {
-    moveCarousel(1);
-}, 4000);
-
-// --- GESTION DES TABS BUILD ---
-const buildTabButtons = document.querySelectorAll('.build-tab-btn');
-buildTabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        buildTabButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        // Ici vous pouvez charger différents véhicules selon la catégorie
-    });
-});
-
 // --- CHARGEMENT INITIAL ---
 document.addEventListener('DOMContentLoaded', () => {
     loadFeaturedVehicles('all');
 });
+
+// --- NAVIGATION DES VÉHICULES AVEC FLÈCHES ---
+function scrollVehicles(direction) {
+    const container = document.getElementById('featured-vehicles');
+    if (!container) return;
+    
+    const scrollAmount = 300; // Pixels à scroller
+    const currentScroll = container.scrollLeft;
+    const newScroll = currentScroll + (scrollAmount * direction);
+    
+    container.scrollTo({
+        left: newScroll,
+        behavior: 'smooth'
+    });
+}
 
 // --- SMOOTH SCROLL POUR LES ANCRES ---
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {

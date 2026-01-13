@@ -15,7 +15,7 @@
     <div class="top-bar">
         <div class="top-bar-container">
             <div class="top-bar-left">
-                <span class="lang-selector">FR</span>
+                <span class="lang-selector active">FR</span>
                 <span class="lang-separator">|</span>
                 <span class="lang-selector">AR</span>
             </div>
@@ -161,48 +161,23 @@
     <!-- Section Véhicules en Vedette -->
     <section id="featured" class="featured-section">
         <div class="featured-container">
-            <h2 class="section-title">Véhicules en vedette</h2>
+            <div class="featured-header">
+                <h2 class="section-title">Véhicules en vedette</h2>
+                <a href="vehicules.html" class="view-all-btn">Voir tout</a>
+            </div>
             <div class="featured-tabs">
                 <button class="tab-btn active" data-tab="new">Nouveaux véhicules</button>
                 <button class="tab-btn" data-tab="used">Véhicules d'occasion</button>
                 <button class="tab-btn" data-tab="all">Tous les véhicules</button>
             </div>
-            <div id="featured-vehicles" class="featured-grid-horizontal">
-                <!-- Les véhicules seront chargés dynamiquement -->
-                <div class="loading-message">Chargement des véhicules...</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Build Your Favorite Vehicle -->
-    <section class="build-section">
-        <div class="build-container">
-            <h2 class="section-title">Découvrez notre sélection</h2>
-            <div class="build-carousel">
-                <button class="carousel-btn prev" onclick="moveCarousel(-1)">‹</button>
-                <div class="carousel-track">
-                    <div class="carousel-slide">
-                        <div class="build-vehicle-card">
-                            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Berline">
-                            <h3>Berline Premium</h3>
-                        </div>
-                    </div>
-                    <div class="carousel-slide active">
-                        <div class="build-vehicle-card">
-                            <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Citadine">
-                            <h3>Citadine Élégante</h3>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="build-vehicle-card">
-                            <img src="https://images.unsplash.com/photo-1503376780353-7e669d7ee776?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Pickup" onerror="this.src='https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'">
-                            <h3>Pickup Robust</h3>
-                        </div>
-                    </div>
+            <div class="vehicles-carousel-wrapper">
+                <button class="vehicle-carousel-btn prev" id="prevVehicles" onclick="scrollVehicles(-1)">‹</button>
+                <div id="featured-vehicles" class="featured-grid-horizontal">
+                    <!-- Les véhicules seront chargés dynamiquement -->
+                    <div class="loading-message">Chargement des véhicules...</div>
                 </div>
-                <button class="carousel-btn next" onclick="moveCarousel(1)">›</button>
+                <button class="vehicle-carousel-btn next" id="nextVehicles" onclick="scrollVehicles(1)">›</button>
             </div>
-            <button class="btn-build" onclick="window.location.href='vehicules.html'">Réserver</button>
         </div>
     </section>
 

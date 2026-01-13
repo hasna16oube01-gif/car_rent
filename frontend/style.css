@@ -587,11 +587,34 @@ h2 { text-align: center; color: #1a202c; margin-bottom: 20px; }
     margin: 0;
     padding: 0;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: #ffffff;
+    background-color: #f8fafc;
     color: #1f2937;
     overflow-x: hidden;
     width: 100%;
     position: relative;
+    min-height: 100vh;
+}
+
+/* Background avec image de voiture et overlay bleu */
+.landing-body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    opacity: 0.15;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.landing-body > * {
+    position: relative;
+    z-index: 1;
 }
 
 /* S'assurer qu'il n'y a pas de sidebar noire */
@@ -601,9 +624,10 @@ h2 { text-align: center; color: #1a202c; margin-bottom: 20px; }
 
 /* --- TOP BAR --- */
 .top-bar {
-    background: #1e3a8a;
-    padding: 10px 0;
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    padding: 12px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .top-bar-container {
@@ -622,15 +646,23 @@ h2 { text-align: center; color: #1a202c; margin-bottom: 20px; }
 }
 
 .lang-selector {
-    color: white;
+    color: rgba(255, 255, 255, 0.8);
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: opacity 0.2s;
+    transition: all 0.2s;
+    padding: 4px 8px;
+    border-radius: 4px;
 }
 
 .lang-selector:hover {
-    opacity: 0.8;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.lang-selector.active {
+    color: white;
+    font-weight: 600;
 }
 
 .lang-separator {
@@ -858,8 +890,9 @@ h2 { text-align: center; color: #1a202c; margin-bottom: 20px; }
 
 /* --- SEARCH SECTION --- */
 .search-section {
-    background: #1f2937;
-    padding: 60px 40px;
+    background: rgba(31, 41, 55, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 80px 40px;
     color: white;
 }
 
@@ -989,7 +1022,9 @@ h2 { text-align: center; color: #1a202c; margin-bottom: 20px; }
 /* --- FEATURED SECTION --- */
 .featured-section {
     padding: 80px 40px;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    min-height: 600px;
 }
 
 .featured-container {
@@ -997,12 +1032,80 @@ h2 { text-align: center; color: #1a202c; margin-bottom: 20px; }
     margin: 0 auto;
 }
 
+.featured-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.view-all-btn {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: 2px solid #2563eb;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.view-all-btn:hover {
+    background: #2563eb;
+    color: white;
+}
+
+.vehicles-carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.vehicle-carousel-btn {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2563eb;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-carousel-btn:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: white;
+    transform: scale(1.1);
+}
+
+.vehicle-carousel-btn.prev {
+    left: 0;
+}
+
+.vehicle-carousel-btn.next {
+    right: 0;
+}
+
 .section-title {
     font-size: 42px;
     font-weight: 700;
-    text-align: center;
-    margin: 0 0 50px 0;
+    margin: 0;
     color: #1f2937;
+}
+
+.featured-header .section-title {
+    text-align: left;
+    margin: 0;
 }
 
 .featured-tabs {
@@ -1048,6 +1151,9 @@ h2 { text-align: center; color: #1a202c; margin-bottom: 20px; }
     overflow-x: auto;
     padding: 20px 0;
     scroll-behavior: smooth;
+    flex: 1;
+    scrollbar-width: thin;
+    scrollbar-color: #2563eb #f1f1f1;
 }
 
 .featured-grid-horizontal::-webkit-scrollbar {
@@ -1309,8 +1415,9 @@ h2 { text-align: center; color: #1a202c; margin-bottom: 20px; }
 
 /* --- SERVICES SECTION --- */
 .services-section {
-    padding: 60px 40px;
-    background: white;
+    padding: 80px 40px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
 }
 
 .services-container {
@@ -1347,8 +1454,9 @@ h2 { text-align: center; color: #1a202c; margin-bottom: 20px; }
 
 /* --- WELCOME SECTION --- */
 .welcome-section {
-    padding: 80px 40px;
-    background: #1f2937;
+    padding: 100px 40px;
+    background: rgba(31, 41, 55, 0.95);
+    backdrop-filter: blur(10px);
     color: white;
 }
 
@@ -1528,6 +1636,22 @@ h2 { text-align: center; color: #1a202c; margin-bottom: 20px; }
     
     .carousel-btn {
         display: none;
+    }
+    
+    .vehicle-carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .featured-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    
+    .featured-header .section-title {
+        font-size: 32px;
     }
 }
 
