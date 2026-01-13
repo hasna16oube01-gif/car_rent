@@ -19,6 +19,10 @@
                 <h1 class="logo-text">Location de Prestige</h1>
             </div>
             <nav class="header-nav">
+                <a href="#featured" class="nav-link">Nos véhicules</a>
+                <a href="#services" class="nav-link">Nos services</a>
+                <a href="#about" class="nav-link">À propos de nous</a>
+                <a href="#contact" class="nav-link">Contact</a>
                 <a href="#" class="nav-icon" title="Compte">👤</a>
                 <a href="#" class="nav-icon" title="Favoris">❤️</a>
                 <a href="#" class="nav-icon" title="Panier">🛒</a>
@@ -149,7 +153,7 @@
                 <button class="tab-btn" data-tab="used">Véhicules d'occasion</button>
                 <button class="tab-btn" data-tab="all">Tous les véhicules</button>
             </div>
-            <div id="featured-vehicles" class="featured-grid">
+            <div id="featured-vehicles" class="featured-grid-horizontal">
                 <!-- Les véhicules seront chargés dynamiquement -->
                 <div class="loading-message">Chargement des véhicules...</div>
             </div>
@@ -159,43 +163,37 @@
     <!-- Section Build Your Favorite Vehicle -->
     <section class="build-section">
         <div class="build-container">
-            <h2 class="section-title">Construisez votre véhicule préféré</h2>
-            <div class="build-tabs">
-                <button class="build-tab-btn active" data-category="passenger">Passagers</button>
-                <button class="build-tab-btn" data-category="suv">SUV & 4x4</button>
-                <button class="build-tab-btn" data-category="people-mover">Monospace</button>
-                <button class="build-tab-btn" data-category="commercial">Commercial</button>
-            </div>
+            <h2 class="section-title">Découvrez notre sélection</h2>
             <div class="build-carousel">
                 <button class="carousel-btn prev" onclick="moveCarousel(-1)">‹</button>
                 <div class="carousel-track">
                     <div class="carousel-slide">
                         <div class="build-vehicle-card">
-                            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400" alt="Berline">
+                            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Berline">
                             <h3>Berline Premium</h3>
                         </div>
                     </div>
                     <div class="carousel-slide active">
                         <div class="build-vehicle-card">
-                            <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=400" alt="Citadine">
+                            <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Citadine">
                             <h3>Citadine Élégante</h3>
                         </div>
                     </div>
                     <div class="carousel-slide">
                         <div class="build-vehicle-card">
-                            <img src="https://images.unsplash.com/photo-1503376780353-7e669d7ee7761?w=400" alt="Pickup">
+                            <img src="https://images.unsplash.com/photo-1503376780353-7e669d7ee776?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Pickup" onerror="this.src='https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'">
                             <h3>Pickup Robust</h3>
                         </div>
                     </div>
                 </div>
                 <button class="carousel-btn next" onclick="moveCarousel(1)">›</button>
             </div>
-            <button class="btn-build" onclick="window.location.href='vehicules.html'">Construire maintenant</button>
+            <button class="btn-build" onclick="window.location.href='vehicules.html'">Réserver</button>
         </div>
     </section>
 
     <!-- Section Services -->
-    <section class="services-section">
+    <section id="services" class="services-section">
         <div class="services-container">
             <div class="service-card">
                 <div class="service-icon">🚗❤️</div>
@@ -221,7 +219,7 @@
     </section>
 
     <!-- Section Welcome -->
-    <section class="welcome-section">
+    <section id="about" class="welcome-section">
         <div class="welcome-container">
             <div class="welcome-content">
                 <h2 class="welcome-title">Bienvenue chez Location de Prestige</h2>
